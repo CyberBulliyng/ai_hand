@@ -1,0 +1,9 @@
+# Данные и кэш (не выкладывать в GitHub)
+data/
+__pycache__/
+*.pyc
+
+# Мусор
+.trash/
+Thumbs.db
+.DS_Store
