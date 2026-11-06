@@ -1,0 +1,9 @@
+torch>=2.14
+torchvision>=0.29
+datasets>=3.0
+huggingface_hub>=0.30
+fsspec
+pyarrow
+pillow
+opencv-python
+requests
