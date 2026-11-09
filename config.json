@@ -1,0 +1,49 @@
+{
+  "dataset": {
+    "name": "HaGRID v2 (512px, re-upload)",
+    "source": "https://huggingface.co/datasets/testdummyvt/hagRIDv2_512px",
+    "original": "https://github.com/hukenovs/hagrid",
+    "classes": ["dislike", "fist", "like", "mute", "ok",
+                "palm", "peace", "rock", "stop", "three"],
+    "images_per_class": 500,
+    "total": 5000,
+    "split": {"train": 4000, "val": 500, "test": 500}
+  },
+  "model": {
+    "architecture": "MobileNetV2",
+    "pretrained": "ImageNet-1k (IMAGENET1K_V2)",
+    "input_size": 224,
+    "num_classes": 10
+  },
+  "experiments": [
+    {
+      "name": "exp1_baseline",
+      "epochs": 10,
+      "augmentation": ["Resize(224)", "RandomHorizontalFlip", "ColorJitter(0.2,0.2,0.2)"],
+      "optimizer": {"type": "AdamW", "lr": 0.0001},
+      "scheduler": "CosineAnnealingLR",
+      "loss": "CrossEntropyLoss(label_smoothing=0.1)",
+      "batch_size": 32,
+      "metrics": {"val_accuracy": 0.838, "test_accuracy": 0.784}
+    },
+    {
+      "name": "exp2_final",
+      "epochs": 15,
+      "augmentation": ["Resize(224)", "RandomAffine(degrees=15, translate=0.1)",
+                       "RandomHorizontalFlip", "ColorJitter(0.2,0.2,0.2)"],
+      "optimizer": {"type": "AdamW", "lr": 0.0001},
+      "scheduler": "CosineAnnealingLR",
+      "loss": "CrossEntropyLoss(label_smoothing=0.1)",
+      "batch_size": 32,
+      "metrics": {
+        "val_accuracy": 0.876,
+        "test_accuracy": 0.808,
+        "test_accuracy_per_class": {
+          "dislike": 0.92, "fist": 0.88, "like": 0.88, "mute": 0.92,
+          "ok": 0.66, "palm": 0.84, "peace": 0.64, "rock": 0.88,
+          "stop": 0.88, "three": 0.58
+        }
+      }
+    }
+  ]
+}
